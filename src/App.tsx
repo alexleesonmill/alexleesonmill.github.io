@@ -19,7 +19,7 @@ function App() {
           },
         }}
       >
-        <BrowserRouter basename="/Jake">
+        <BrowserRouter basename="/">
           <Layout>
             <Routes>
               <Route path="/" element={<About />} />
