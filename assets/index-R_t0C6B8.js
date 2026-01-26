@@ -588,12 +588,12 @@ html body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: ${({theme:e})=>e.spacing.md} !important;
+  margin-bottom: ${({theme:e})=>e.spacing.sm} !important;
   font-weight: 800 !important;
 `,m7=Lt(s7)`
-  margin-bottom: ${({theme:e})=>e.spacing.md};
+  margin-bottom: ${({theme:e})=>e.spacing.sm};
   font-size: 1.15rem;
-  line-height: 1.9;
+  line-height: 1.5;
   color: ${({theme:e})=>e.colors.text};
 `,p7=Lt(cr)`
   margin-top: ${({theme:e})=>e.spacing.md};
