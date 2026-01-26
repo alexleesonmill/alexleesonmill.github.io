@@ -112,7 +112,7 @@ const SocialLink = styled.a`
 `;
 
 const StyledContent = styled(Content)`
-  padding: ${({ theme }) => theme.spacing.lg};
+  padding: ${({ theme }) => theme.spacing.md};
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;

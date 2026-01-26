@@ -58,22 +58,9 @@ const StyledForm = styled(Form)`
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
     }
   }
-  
-  .ant-btn-primary {
-    background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
-    border: none;
-    border-radius: 8px;
-    height: 48px;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all ${({ theme }) => theme.transitions.normal};
-    box-shadow: ${({ theme }) => theme.shadows.md};
-    
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: ${({ theme }) => theme.shadows.lg};
-      background: linear-gradient(135deg, ${({ theme }) => theme.colors.secondary} 0%, ${({ theme }) => theme.colors.tertiary} 100%);
-    }
+
+  .ant-form-item {
+    margin-bottom: ${({ theme }) => theme.spacing.xs};
   }
 `;
 
