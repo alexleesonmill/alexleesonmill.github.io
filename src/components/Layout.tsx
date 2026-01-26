@@ -2,6 +2,15 @@ import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Layout as AntLayout, Menu } from 'antd';
+import { 
+  FaTwitter, 
+  FaInstagram, 
+  FaEnvelope, 
+  FaLinkedin, 
+  FaFacebook, 
+  FaYoutube 
+} from 'react-icons/fa';
+import { socialLinks } from '../config/socialLinks';
 
 const { Header, Content, Footer } = AntLayout;
 
@@ -10,19 +19,32 @@ const StyledLayout = styled(AntLayout)`
 `;
 
 const StyledHeader = styled(Header)`
-  background: ${({ theme }) => theme.colors.primary};
-  padding: 0 ${({ theme }) => theme.spacing.md};
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+  padding: 0;
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const HeaderContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 ${({ theme }) => theme.spacing.md};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
 `;
 
 const StyledMenu = styled(Menu)`
   background: transparent;
   border-bottom: none;
+  flex: 1;
   
   .ant-menu-item {
     color: white;
+    font-weight: 500;
     
     &:hover {
       color: ${({ theme }) => theme.colors.accent} !important;
@@ -31,6 +53,43 @@ const StyledMenu = styled(Menu)`
     &.ant-menu-item-selected {
       color: ${({ theme }) => theme.colors.accent} !important;
     }
+  }
+`;
+
+const SocialLinks = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  margin-left: ${({ theme }) => theme.spacing.md};
+  
+  @media (max-width: 768px) {
+    gap: ${({ theme }) => theme.spacing.xs};
+    margin-left: ${({ theme }) => theme.spacing.xs};
+  }
+`;
+
+const SocialLink = styled.a`
+  color: white;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  
+  &:hover {
+    color: ${({ theme }) => theme.colors.accent};
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 768px) {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
   }
 `;
 
@@ -62,14 +121,39 @@ export const Layout = ({ children }: LayoutProps) => {
     { key: '/contact', label: <Link to="/contact">Contact</Link> },
   ];
 
+  // Social media icons mapping
+  const socialIcons = [
+    { key: 'twitter', icon: FaTwitter, url: socialLinks.twitter },
+    { key: 'instagram', icon: FaInstagram, url: socialLinks.instagram },
+    { key: 'email', icon: FaEnvelope, url: socialLinks.email },
+    { key: 'linkedin', icon: FaLinkedin, url: socialLinks.linkedin },
+    { key: 'facebook', icon: FaFacebook, url: socialLinks.facebook },
+    { key: 'youtube', icon: FaYoutube, url: socialLinks.youtube },
+  ].filter(item => item.url); // Only show icons with URLs
+
   return (
     <StyledLayout>
       <StyledHeader>
-        <StyledMenu
-          mode="horizontal"
-          selectedKeys={[location.pathname]}
-          items={menuItems}
-        />
+        <HeaderContainer>
+          <StyledMenu
+            mode="horizontal"
+            selectedKeys={[location.pathname]}
+            items={menuItems}
+          />
+          <SocialLinks>
+            {socialIcons.map(({ key, icon: Icon, url }) => (
+              <SocialLink
+                key={key}
+                href={url}
+                target={key === 'email' ? undefined : '_blank'}
+                rel={key === 'email' ? undefined : 'noopener noreferrer'}
+                aria-label={key}
+              >
+                <Icon />
+              </SocialLink>
+            ))}
+          </SocialLinks>
+        </HeaderContainer>
       </StyledHeader>
       <StyledContent>{children}</StyledContent>
       <StyledFooter>
