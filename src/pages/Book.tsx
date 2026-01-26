@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Typography, Button } from 'antd';
+import dragCover from '../assets/drag.jpg';
 
 const { Title, Paragraph } = Typography;
 
@@ -8,16 +9,15 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const BookCover = styled.div`
+const BookCover = styled.img`
   width: 300px;
-  height: 450px;
-  background: ${({ theme }) => theme.colors.backgroundAlt};
+  height: auto;
+  max-height: 450px;
+  object-fit: contain;
   border: 1px solid ${({ theme }) => theme.colors.border};
   margin: ${({ theme }) => theme.spacing.md} auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${({ theme }) => theme.colors.textLight};
+  display: block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const PurchaseButton = styled(Button)`
@@ -27,18 +27,25 @@ const PurchaseButton = styled(Button)`
 export const Book = () => {
   return (
     <Container>
-      <Title level={1}>My Book</Title>
+      <Title level={1}>Drag: A British History</Title>
       <div style={{ textAlign: 'center' }}>
-        <BookCover>
-          <span>Book Cover Placeholder</span>
-        </BookCover>
+        <BookCover src={dragCover} alt="Drag: A British History book cover" />
         <Paragraph>
-          This is my most significant work to date. [Add book description, 
-          publication details, and any relevant information about the book here.]
+          <a href="https://www.ucpress.edu/books/drag/hardcover" target="_blank" rel="noopener noreferrer">
+            <strong>Drag: A British History</strong>
+          </a>{' '}
+          (published by University of California Press).
         </Paragraph>
-        <PurchaseButton type="primary" size="large">
-          Purchase on Amazon
-        </PurchaseButton>
+        <a 
+          href="https://www.ucpress.edu/books/drag/hardcover" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{ textDecoration: 'none' }}
+        >
+          <PurchaseButton type="primary" size="large">
+            Purchase
+          </PurchaseButton>
+        </a>
       </div>
     </Container>
   );

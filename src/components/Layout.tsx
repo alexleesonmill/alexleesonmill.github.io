@@ -59,7 +59,6 @@ export const Layout = ({ children }: LayoutProps) => {
     { key: '/', label: <Link to="/">About</Link> },
     { key: '/book', label: <Link to="/book">Book</Link> },
     { key: '/writing', label: <Link to="/writing">Writing</Link> },
-    { key: '/updates', label: <Link to="/updates">Updates</Link> },
     { key: '/contact', label: <Link to="/contact">Contact</Link> },
   ];
 

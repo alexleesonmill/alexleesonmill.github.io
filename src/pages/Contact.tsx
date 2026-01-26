@@ -24,15 +24,48 @@ export const Contact = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
-  const onFinish = async (_values: any) => {
+  const onFinish = async (values: any) => {
     setLoading(true);
-    // For a static site, you'd typically use a service like Formspree or EmailJS
-    // For now, we'll just show a success message
-    setTimeout(() => {
-      message.success('Thank you for your message! I\'ll get back to you soon.');
-      form.resetFields();
+    try {
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+      
+      if (!accessKey) {
+        message.error('Contact form is not configured. Please email jrb45@kent.ac.uk directly.');
+        setLoading(false);
+        return;
+      }
+
+      // Using Web3Forms - free contact form service
+      // Get your access key from https://web3forms.com (free, no signup required)
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: values.subject || 'Contact Form Submission',
+          from_name: values.name,
+          from_email: values.email,
+          message: `Name: ${values.name}\nEmail: ${values.email}\n\nMessage:\n${values.message}`,
+          to_email: 'jrb45@kent.ac.uk',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        message.success('Thank you for your message! I\'ll get back to you soon.');
+        form.resetFields();
+      } else {
+        throw new Error(data.message || 'Failed to send message');
+      }
+    } catch (error) {
+      message.error('Sorry, there was an error sending your message. Please try again or email me directly at jrb45@kent.ac.uk');
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (

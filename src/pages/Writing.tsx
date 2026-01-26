@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Typography, Tabs } from 'antd';
+import { Typography, Tabs, List } from 'antd';
 
-const { Title } = Typography;
+const { Title, Paragraph, Link: AntLink } = Typography;
 
 const Container = styled.div`
   max-width: 900px;
@@ -12,32 +12,183 @@ const Section = styled.div`
   margin-top: ${({ theme }) => theme.spacing.md};
 `;
 
+const StyledList = styled(List)`
+  .ant-list-item {
+    padding: ${({ theme }) => theme.spacing.sm} 0;
+  }
+`;
+
 export const Writing = () => {
+  const academicArticles = [
+    {
+      title: '"Little Richard: Down, Not Out": The Quasar of Rock\'s LGBTQ Iconicity and the Historical Reception to His Sexuality and Gender Presentation, 1955–Present',
+      journal: 'Journal of the History of Sexuality',
+      url: 'https://doi.org/10.1353/sex.00051',
+    },
+    {
+      title: 'Splinters: Cross-Dressing Ex-Servicemen on the Interwar Stage',
+      journal: 'Twentieth Century British History',
+      url: 'https://doi.org/10.1093/tcbh/hwy037',
+    },
+  ];
+
+  const pressArticles = [
+    {
+      title: 'Dress Code',
+      publication: 'Air Mail',
+      url: 'https://airmail.news/books/2023/9/dress-code',
+    },
+    {
+      title: '"They Helped Win the War": The Surprisingly Mainstream History of Drag',
+      publication: 'The Telegraph',
+      url: 'https://www.telegraph.co.uk/books/non-fiction/drag-surprising-mainstream-history/',
+    },
+  ];
+
+  const mediaAppearances = [
+    {
+      name: 'MDR',
+      url: 'https://www.mdr.de/nachrichten/deutschland/politik/transfrauen-selbstbestimmung-uk-usa-einordnung-102.html',
+    },
+    {
+      name: 'BBC Culture',
+      url: 'https://www.bbc.com/culture/article/20241011-how-shocking-drag-queen-divine-went-mainstream',
+    },
+    {
+      name: 'Dazed',
+      url: 'https://www.dazeddigital.com/life-culture/article/60761/1/the-da-zed-guide-to-british-drag-jacob-bloomfield',
+    },
+    {
+      name: 'The Herald',
+      url: 'https://www.heraldscotland.com/politics/24010114.secret-history-drag-trans-wars-soldiers-sex-scandals/',
+    },
+    {
+      name: 'The Stage',
+      url: 'https://www.thestage.co.uk/obituaries--archive/archive/shantay-you-stay-how-drag-emerged-from-showbiz-to-be-a-cornerstone-of-gay-culture',
+    },
+    {
+      name: 'Betwixt the Sheets',
+      url: 'https://podcasts.apple.com/us/podcast/the-history-of-drag-queens/id1612090432?i=1000652030943',
+    },
+    {
+      name: 'BBC History Extra',
+      url: 'https://podcasts.apple.com/us/podcast/history-extra-podcast/id256580326?i=1000644755540',
+    },
+    {
+      name: 'QX',
+      url: 'https://www.qxmagazine.com/2023/09/qx-interviews-jacob-bloomfield-author-of-drag-a-british-history/',
+    },
+    {
+      name: 'Times Radio',
+      url: 'https://x.com/TimesRadio/status/1706693421954470333?s=20',
+    },
+  ];
+
+  const bookReviews = [
+    {
+      title: 'The Pet Shop Boys and the Political',
+      editor: 'edited by Bodie A. Ashton',
+      url: 'https://www.hsozkult.de/review/id/reb-144446?language=en',
+    },
+    {
+      title: 'The Bebop Scene in London\'s Soho',
+      author: '1945-1950 by Ray Kinsella',
+      url: 'https://www.hsozkult.de/publicationreview/id/reb-132762',
+    },
+  ];
+
   const items = [
     {
-      key: 'book',
-      label: 'Book',
+      key: 'academic',
+      label: 'Academic Journal Articles',
       children: (
         <Section>
-          <p>[Book information and details]</p>
+          <StyledList
+            dataSource={academicArticles}
+            renderItem={(item) => (
+              <List.Item>
+                <div>
+                  <Paragraph strong style={{ marginBottom: 4 }}>
+                    <a href={item.url} target="_blank" rel="noopener noreferrer">
+                      {item.title}
+                    </a>
+                  </Paragraph>
+                  <Paragraph type="secondary" style={{ marginBottom: 0 }}>
+                    in <em>{item.journal}</em>
+                  </Paragraph>
+                </div>
+              </List.Item>
+            )}
+          />
         </Section>
       ),
     },
     {
-      key: 'articles',
-      label: 'Articles',
+      key: 'press',
+      label: 'Articles in the Press',
       children: (
         <Section>
-          <p>[List of articles with links and descriptions]</p>
+          <StyledList
+            dataSource={pressArticles}
+            renderItem={(item) => (
+              <List.Item>
+                <div>
+                  <Paragraph strong style={{ marginBottom: 4 }}>
+                    <a href={item.url} target="_blank" rel="noopener noreferrer">
+                      {item.title}
+                    </a>
+                  </Paragraph>
+                  <Paragraph type="secondary" style={{ marginBottom: 0 }}>
+                    in <em>{item.publication}</em>
+                  </Paragraph>
+                </div>
+              </List.Item>
+            )}
+          />
+        </Section>
+      ),
+    },
+    {
+      key: 'media',
+      label: 'Selected Media Appearances',
+      children: (
+        <Section>
+          <StyledList
+            dataSource={mediaAppearances}
+            renderItem={(item) => (
+              <List.Item>
+                <Paragraph style={{ marginBottom: 0 }}>
+                  <a href={item.url} target="_blank" rel="noopener noreferrer">
+                    {item.name}
+                  </a>
+                </Paragraph>
+              </List.Item>
+            )}
+          />
         </Section>
       ),
     },
     {
       key: 'reviews',
-      label: 'Book Reviews',
+      label: 'Selected Book Reviews',
       children: (
         <Section>
-          <p>[Book reviews and commentary]</p>
+          <StyledList
+            dataSource={bookReviews}
+            renderItem={(item) => (
+              <List.Item>
+                <div>
+                  <Paragraph strong style={{ marginBottom: 0 }}>
+                    <a href={item.url} target="_blank" rel="noopener noreferrer">
+                      {item.title}
+                    </a>
+                    {item.editor && `, ${item.editor}`}
+                    {item.author && `, ${item.author}`}
+                  </Paragraph>
+                </div>
+              </List.Item>
+            )}
+          />
         </Section>
       ),
     },
@@ -46,7 +197,7 @@ export const Writing = () => {
   return (
     <Container>
       <Title level={1}>Writing</Title>
-      <Tabs items={items} defaultActiveKey="book" />
+      <Tabs items={items} defaultActiveKey="academic" />
     </Container>
   );
 };

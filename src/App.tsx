@@ -6,7 +6,7 @@ import { Layout } from './components/Layout';
 import { About } from './pages/About';
 import { Book } from './pages/Book';
 import { Writing } from './pages/Writing';
-import { Updates } from './pages/Updates';
+// import { Updates } from './pages/Updates';
 import { Contact } from './pages/Contact';
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
               <Route path="/" element={<About />} />
               <Route path="/book" element={<Book />} />
               <Route path="/writing" element={<Writing />} />
-              <Route path="/updates" element={<Updates />} />
+              {/* <Route path="/updates" element={<Updates />} /> */}
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </Layout>

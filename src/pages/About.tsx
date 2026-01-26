@@ -26,6 +26,14 @@ export const About = () => {
           updated on my latest projects and appearances.
         </Paragraph>
       </Section>
+      <Section>
+        <Title level={2}>Services</Title>
+        <Paragraph>
+          I have assisted with research, copy-editing, and consultation for several academic and 
+          heritage projects. I am also available for press comment. Please get in touch if you're 
+          interested in such services.
+        </Paragraph>
+      </Section>
     </Container>
   );
 };
