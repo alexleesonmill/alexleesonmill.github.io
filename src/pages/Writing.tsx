@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Typography, Tabs, List } from 'antd';
 
-const { Title, Paragraph, Link: AntLink } = Typography;
+const { Title, Paragraph } = Typography;
 
 const Container = styled.div`
   max-width: 900px;
@@ -18,8 +18,32 @@ const StyledList = styled(List)`
   }
 `;
 
+interface AcademicArticle {
+  title: string;
+  journal: string;
+  url: string;
+}
+
+interface PressArticle {
+  title: string;
+  publication: string;
+  url: string;
+}
+
+interface MediaAppearance {
+  name: string;
+  url: string;
+}
+
+interface BookReview {
+  title: string;
+  editor?: string;
+  author?: string;
+  url: string;
+}
+
 export const Writing = () => {
-  const academicArticles = [
+  const academicArticles: AcademicArticle[] = [
     {
       title: '"Little Richard: Down, Not Out": The Quasar of Rock\'s LGBTQ Iconicity and the Historical Reception to His Sexuality and Gender Presentation, 1955–Present',
       journal: 'Journal of the History of Sexuality',
@@ -32,7 +56,7 @@ export const Writing = () => {
     },
   ];
 
-  const pressArticles = [
+  const pressArticles: PressArticle[] = [
     {
       title: 'Dress Code',
       publication: 'Air Mail',
@@ -45,7 +69,7 @@ export const Writing = () => {
     },
   ];
 
-  const mediaAppearances = [
+  const mediaAppearances: MediaAppearance[] = [
     {
       name: 'MDR',
       url: 'https://www.mdr.de/nachrichten/deutschland/politik/transfrauen-selbstbestimmung-uk-usa-einordnung-102.html',
@@ -84,7 +108,7 @@ export const Writing = () => {
     },
   ];
 
-  const bookReviews = [
+  const bookReviews: BookReview[] = [
     {
       title: 'The Pet Shop Boys and the Political',
       editor: 'edited by Bodie A. Ashton',
@@ -105,20 +129,23 @@ export const Writing = () => {
         <Section>
           <StyledList
             dataSource={academicArticles}
-            renderItem={(item) => (
-              <List.Item>
-                <div>
-                  <Paragraph strong style={{ marginBottom: 4 }}>
-                    <a href={item.url} target="_blank" rel="noopener noreferrer">
-                      {item.title}
-                    </a>
-                  </Paragraph>
-                  <Paragraph type="secondary" style={{ marginBottom: 0 }}>
-                    in <em>{item.journal}</em>
-                  </Paragraph>
-                </div>
-              </List.Item>
-            )}
+            renderItem={(item) => {
+              const article = item as AcademicArticle;
+              return (
+                <List.Item>
+                  <div>
+                    <Paragraph strong style={{ marginBottom: 4 }}>
+                      <a href={article.url} target="_blank" rel="noopener noreferrer">
+                        {article.title}
+                      </a>
+                    </Paragraph>
+                    <Paragraph type="secondary" style={{ marginBottom: 0 }}>
+                      in <em>{article.journal}</em>
+                    </Paragraph>
+                  </div>
+                </List.Item>
+              );
+            }}
           />
         </Section>
       ),
@@ -130,20 +157,23 @@ export const Writing = () => {
         <Section>
           <StyledList
             dataSource={pressArticles}
-            renderItem={(item) => (
-              <List.Item>
-                <div>
-                  <Paragraph strong style={{ marginBottom: 4 }}>
-                    <a href={item.url} target="_blank" rel="noopener noreferrer">
-                      {item.title}
-                    </a>
-                  </Paragraph>
-                  <Paragraph type="secondary" style={{ marginBottom: 0 }}>
-                    in <em>{item.publication}</em>
-                  </Paragraph>
-                </div>
-              </List.Item>
-            )}
+            renderItem={(item) => {
+              const article = item as PressArticle;
+              return (
+                <List.Item>
+                  <div>
+                    <Paragraph strong style={{ marginBottom: 4 }}>
+                      <a href={article.url} target="_blank" rel="noopener noreferrer">
+                        {article.title}
+                      </a>
+                    </Paragraph>
+                    <Paragraph type="secondary" style={{ marginBottom: 0 }}>
+                      in <em>{article.publication}</em>
+                    </Paragraph>
+                  </div>
+                </List.Item>
+              );
+            }}
           />
         </Section>
       ),
@@ -155,15 +185,18 @@ export const Writing = () => {
         <Section>
           <StyledList
             dataSource={mediaAppearances}
-            renderItem={(item) => (
-              <List.Item>
-                <Paragraph style={{ marginBottom: 0 }}>
-                  <a href={item.url} target="_blank" rel="noopener noreferrer">
-                    {item.name}
-                  </a>
-                </Paragraph>
-              </List.Item>
-            )}
+            renderItem={(item) => {
+              const appearance = item as MediaAppearance;
+              return (
+                <List.Item>
+                  <Paragraph style={{ marginBottom: 0 }}>
+                    <a href={appearance.url} target="_blank" rel="noopener noreferrer">
+                      {appearance.name}
+                    </a>
+                  </Paragraph>
+                </List.Item>
+              );
+            }}
           />
         </Section>
       ),
@@ -175,19 +208,22 @@ export const Writing = () => {
         <Section>
           <StyledList
             dataSource={bookReviews}
-            renderItem={(item) => (
-              <List.Item>
-                <div>
-                  <Paragraph strong style={{ marginBottom: 0 }}>
-                    <a href={item.url} target="_blank" rel="noopener noreferrer">
-                      {item.title}
-                    </a>
-                    {item.editor && `, ${item.editor}`}
-                    {item.author && `, ${item.author}`}
-                  </Paragraph>
-                </div>
-              </List.Item>
-            )}
+            renderItem={(item) => {
+              const review = item as BookReview;
+              return (
+                <List.Item>
+                  <div>
+                    <Paragraph strong style={{ marginBottom: 0 }}>
+                      <a href={review.url} target="_blank" rel="noopener noreferrer">
+                        {review.title}
+                      </a>
+                      {review.editor && `, ${review.editor}`}
+                      {review.author && `, ${review.author}`}
+                    </Paragraph>
+                  </div>
+                </List.Item>
+              );
+            }}
           />
         </Section>
       ),
