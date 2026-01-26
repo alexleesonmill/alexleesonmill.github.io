@@ -33,14 +33,14 @@ const StyledTitle = styled(Title)`
 `;
 
 const IntroText = styled(Paragraph)`
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   font-size: 1.15rem;
   line-height: 1.9;
   color: ${({ theme }) => theme.colors.text};
 `;
 
 const StyledForm = styled(Form)`
-  margin-top: ${({ theme }) => theme.spacing.lg};
+  margin-top: ${({ theme }) => theme.spacing.md};
   
   .ant-input,
   .ant-input-affix-wrapper {

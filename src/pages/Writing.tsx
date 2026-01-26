@@ -26,7 +26,7 @@ const StyledTitle = styled(Title)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: ${({ theme }) => theme.spacing.lg} !important;
+  margin-bottom: ${({ theme }) => theme.spacing.md} !important;
   font-weight: 800 !important;
 `;
 

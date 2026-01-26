@@ -29,7 +29,7 @@ const StyledTitle = styled(Title)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: ${({ theme }) => theme.spacing.lg} !important;
+  margin-bottom: ${({ theme }) => theme.spacing.md} !important;
   font-weight: 800 !important;
 `;
 
@@ -39,7 +39,7 @@ const BookCover = styled.img`
   max-height: 400px;
   object-fit: contain;
   border-radius: 12px;
-  margin: ${({ theme }) => theme.spacing.lg} auto;
+  margin: ${({ theme }) => theme.spacing.md} auto;
   display: block;
   box-shadow: ${({ theme }) => theme.shadows.xl};
   transition: all ${({ theme }) => theme.transitions.normal};
@@ -84,7 +84,7 @@ const CoverLink = styled.a`
 const BookParagraph = styled(Paragraph)`
   font-size: 1.15rem;
   line-height: 1.8;
-  margin-top: ${({ theme }) => theme.spacing.lg};
+  margin-top: ${({ theme }) => theme.spacing.md};
   
   a {
     color: ${({ theme }) => theme.colors.primary};

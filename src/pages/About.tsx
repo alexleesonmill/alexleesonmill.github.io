@@ -11,9 +11,9 @@ const Container = styled.div`
 `;
 
 const Section = styled.section`
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   background: white;
-  padding: ${({ theme }) => theme.spacing.lg};
+  padding: ${({ theme }) => theme.spacing.md};
   border-radius: 16px;
   box-shadow: ${({ theme }) => theme.shadows.md};
   transition: all ${({ theme }) => theme.transitions.normal};
@@ -35,7 +35,7 @@ const StyledTitle = styled(Title)`
 
 const AboutContent = styled.div`
   display: flex;
-  gap: ${({ theme }) => theme.spacing.lg};
+  gap: ${({ theme }) => theme.spacing.md};
   align-items: flex-start;
   
   @media (max-width: 768px) {
