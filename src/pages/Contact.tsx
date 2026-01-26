@@ -13,7 +13,7 @@ const Container = styled.div`
 
 const ContactCard = styled.div`
   background: white;
-  padding: ${({ theme }) => theme.spacing.xl};
+  padding: ${({ theme }) => theme.spacing.md};
   border-radius: 20px;
   box-shadow: ${({ theme }) => theme.shadows.lg};
   transition: all ${({ theme }) => theme.transitions.normal};
@@ -33,14 +33,14 @@ const StyledTitle = styled(Title)`
 `;
 
 const IntroText = styled(Paragraph)`
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
+  margin-bottom: ${({ theme }) => theme.spacing.none} !important;
   font-size: 1.15rem;
   line-height: 1.5;
   color: ${({ theme }) => theme.colors.text};
 `;
 
 const StyledForm = styled(Form)`
-  margin-top: ${({ theme }) => theme.spacing.md};
+  margin-top: ${({ theme }) => theme.spacing.sm};
   
   .ant-input,
   .ant-input-affix-wrapper {
