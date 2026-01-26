@@ -28,14 +28,14 @@ const StyledTitle = styled(Title)`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: ${({ theme }) => theme.spacing.md} !important;
+  margin-bottom: ${({ theme }) => theme.spacing.sm} !important;
   font-weight: 800 !important;
 `;
 
 const IntroText = styled(Paragraph)`
-  margin-bottom: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
   font-size: 1.15rem;
-  line-height: 1.9;
+  line-height: 1.5;
   color: ${({ theme }) => theme.colors.text};
 `;
 
