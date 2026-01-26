@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Typography, Button } from 'antd';
+import { Typography } from 'antd';
 import dragCover from '../assets/drag.jpg';
 
 const { Title, Paragraph } = Typography;
@@ -10,18 +10,26 @@ const Container = styled.div`
 `;
 
 const BookCover = styled.img`
-  width: 300px;
+  max-width: 200px;
   height: auto;
-  max-height: 450px;
+  max-height: 250px;
   object-fit: contain;
   border: 1px solid ${({ theme }) => theme.colors.border};
   margin: ${({ theme }) => theme.spacing.md} auto;
   display: block;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
 `;
 
-const PurchaseButton = styled(Button)`
-  margin-top: ${({ theme }) => theme.spacing.md};
+const CoverLink = styled.a`
+  display: block;
+  text-decoration: none;
+  
+  &:hover ${BookCover} {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 export const Book = () => {
@@ -29,23 +37,19 @@ export const Book = () => {
     <Container>
       <Title level={1}>Drag: A British History</Title>
       <div style={{ textAlign: 'center' }}>
-        <BookCover src={dragCover} alt="Drag: A British History book cover" />
+        <CoverLink 
+          href="https://www.ucpress.edu/books/drag/hardcover" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          <BookCover src={dragCover} alt="Drag: A British History book cover" />
+        </CoverLink>
         <Paragraph>
           <a href="https://www.ucpress.edu/books/drag/hardcover" target="_blank" rel="noopener noreferrer">
             <strong>Drag: A British History</strong>
           </a>{' '}
           (published by University of California Press).
         </Paragraph>
-        <a 
-          href="https://www.ucpress.edu/books/drag/hardcover" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          style={{ textDecoration: 'none' }}
-        >
-          <PurchaseButton type="primary" size="large">
-            Purchase
-          </PurchaseButton>
-        </a>
       </div>
     </Container>
   );
