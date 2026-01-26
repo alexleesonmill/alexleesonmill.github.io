@@ -5,38 +5,104 @@ import dragCover from '../assets/drag.jpg';
 const { Title, Paragraph } = Typography;
 
 const Container = styled.div`
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out;
+`;
+
+const BookSection = styled.div`
+  background: white;
+  padding: ${({ theme }) => theme.spacing.xl};
+  border-radius: 20px;
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+  text-align: center;
+  transition: all ${({ theme }) => theme.transitions.normal};
+  
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows.xl};
+    transform: translateY(-6px);
+  }
+`;
+
+const StyledTitle = styled(Title)`
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: ${({ theme }) => theme.spacing.lg} !important;
+  font-weight: 800 !important;
 `;
 
 const BookCover = styled.img`
-  max-width: 200px;
+  max-width: 280px;
   height: auto;
-  max-height: 250px;
+  max-height: 400px;
   object-fit: contain;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  margin: ${({ theme }) => theme.spacing.md} auto;
+  border-radius: 12px;
+  margin: ${({ theme }) => theme.spacing.lg} auto;
   display: block;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: ${({ theme }) => theme.shadows.xl};
+  transition: all ${({ theme }) => theme.transitions.normal};
   cursor: pointer;
 `;
 
 const CoverLink = styled.a`
-  display: block;
+  display: inline-block;
   text-decoration: none;
+  position: relative;
   
-  &:hover ${BookCover} {
-    transform: scale(1.02);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  &::after {
+    content: 'Click to purchase';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${({ theme }) => theme.colors.primary};
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: all ${({ theme }) => theme.transitions.normal};
+    white-space: nowrap;
+  }
+  
+  &:hover {
+    ${BookCover} {
+      transform: scale(1.05) rotate(2deg);
+      box-shadow: ${({ theme }) => theme.shadows.glow};
+    }
+    
+    &::after {
+      opacity: 1;
+      bottom: -40px;
+    }
+  }
+`;
+
+const BookParagraph = styled(Paragraph)`
+  font-size: 1.15rem;
+  line-height: 1.8;
+  margin-top: ${({ theme }) => theme.spacing.lg};
+  
+  a {
+    color: ${({ theme }) => theme.colors.primary};
+    font-weight: 600;
+    transition: all ${({ theme }) => theme.transitions.normal};
+    
+    &:hover {
+      color: ${({ theme }) => theme.colors.secondary};
+      text-decoration: underline;
+    }
   }
 `;
 
 export const Book = () => {
   return (
     <Container>
-      <Title level={1}>Drag: A British History</Title>
-      <div style={{ textAlign: 'center' }}>
+      <BookSection>
+        <StyledTitle level={1}>Drag: A British History</StyledTitle>
         <CoverLink 
           href="https://www.ucpress.edu/books/drag/hardcover" 
           target="_blank" 
@@ -44,13 +110,13 @@ export const Book = () => {
         >
           <BookCover src={dragCover} alt="Drag: A British History book cover" />
         </CoverLink>
-        <Paragraph>
+        <BookParagraph>
           <a href="https://www.ucpress.edu/books/drag/hardcover" target="_blank" rel="noopener noreferrer">
             <strong>Drag: A British History</strong>
           </a>{' '}
           (published by University of California Press).
-        </Paragraph>
-      </div>
+        </BookParagraph>
+      </BookSection>
     </Container>
   );
 };

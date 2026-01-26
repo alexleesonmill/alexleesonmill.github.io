@@ -6,18 +6,75 @@ const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 
 const Container = styled.div`
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out;
+`;
+
+const ContactCard = styled.div`
+  background: white;
+  padding: ${({ theme }) => theme.spacing.xl};
+  border-radius: 20px;
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+  transition: all ${({ theme }) => theme.transitions.normal};
+  
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows.xl};
+  }
+`;
+
+const StyledTitle = styled(Title)`
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: ${({ theme }) => theme.spacing.md} !important;
+  font-weight: 800 !important;
 `;
 
 const IntroText = styled(Paragraph)`
   margin-bottom: ${({ theme }) => theme.spacing.lg};
-  font-size: 1.1em;
-  line-height: 1.8;
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const StyledForm = styled(Form)`
-  margin-top: ${({ theme }) => theme.spacing.md};
+  margin-top: ${({ theme }) => theme.spacing.lg};
+  
+  .ant-input,
+  .ant-input-affix-wrapper {
+    border-radius: 8px;
+    border: 2px solid ${({ theme }) => theme.colors.border};
+    transition: all ${({ theme }) => theme.transitions.normal};
+    
+    &:hover {
+      border-color: ${({ theme }) => theme.colors.primary};
+    }
+    
+    &:focus,
+    &.ant-input-affix-wrapper-focused {
+      border-color: ${({ theme }) => theme.colors.primary};
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+  }
+  
+  .ant-btn-primary {
+    background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+    border: none;
+    border-radius: 8px;
+    height: 48px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all ${({ theme }) => theme.transitions.normal};
+    box-shadow: ${({ theme }) => theme.shadows.md};
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: ${({ theme }) => theme.shadows.lg};
+      background: linear-gradient(135deg, ${({ theme }) => theme.colors.secondary} 0%, ${({ theme }) => theme.colors.tertiary} 100%);
+    }
+  }
 `;
 
 export const Contact = () => {
@@ -70,15 +127,16 @@ export const Contact = () => {
 
   return (
     <Container>
-      <Title level={1}>Contact</Title>
-      <IntroText>
-        Please feel free to get in touch if you'd like to interview me for a news story, 
-        chat about historical topics in my wheelhouse, or whatever else. I have experience 
-        in assisting others in historical research, consulting museums and cultural institutions 
-        regarding historical artefacts and topics, and copy-editing academic books: I'm happy 
-        to do any of these things for a reasonable fee.
-      </IntroText>
-      <StyledForm
+      <ContactCard>
+        <StyledTitle level={1}>Contact</StyledTitle>
+        <IntroText>
+          Please feel free to get in touch if you'd like to interview me for a news story, 
+          chat about historical topics in my wheelhouse, or whatever else. I have experience 
+          in assisting others in historical research, consulting museums and cultural institutions 
+          regarding historical artefacts and topics, and copy-editing academic books: I'm happy 
+          to do any of these things for a reasonable fee.
+        </IntroText>
+        <StyledForm
         form={form}
         layout="vertical"
         onFinish={onFinish}
@@ -124,6 +182,7 @@ export const Contact = () => {
           </Button>
         </Form.Item>
       </StyledForm>
+      </ContactCard>
     </Container>
   );
 };

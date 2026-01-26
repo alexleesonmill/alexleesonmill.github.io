@@ -5,12 +5,32 @@ import jacobImage from '../assets/jbloomfield.jpg';
 const { Title, Paragraph } = Typography;
 
 const Container = styled.div`
-  max-width: 500px;
+  max-width: 1000px;
   margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out;
 `;
 
 const Section = styled.section`
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  background: white;
+  padding: ${({ theme }) => theme.spacing.lg};
+  border-radius: 16px;
+  box-shadow: ${({ theme }) => theme.shadows.md};
+  transition: all ${({ theme }) => theme.transitions.normal};
+  
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows.lg};
+    transform: translateY(-4px);
+  }
+`;
+
+const StyledTitle = styled(Title)`
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: ${({ theme }) => theme.spacing.md} !important;
+  font-weight: 800 !important;
 `;
 
 const AboutContent = styled.div`
@@ -25,11 +45,38 @@ const AboutContent = styled.div`
 
 const TextContent = styled.div`
   flex: 2;
+  
+  p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: ${({ theme }) => theme.colors.text};
+    margin-bottom: ${({ theme }) => theme.spacing.md};
+  }
 `;
 
 const ImageWrapper = styled.div`
   flex: 1;
   min-width: 0;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: 10px;
+    bottom: 10px;
+    background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.tertiary} 100%);
+    border-radius: 16px;
+    z-index: -1;
+    opacity: 0.3;
+    transition: all ${({ theme }) => theme.transitions.normal};
+  }
+  
+  &:hover::before {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
   
   @media (max-width: 768px) {
     width: 100%;
@@ -41,16 +88,22 @@ const ImageWrapper = styled.div`
 const ProfileImage = styled.img`
   width: 100%;
   height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: ${({ theme }) => theme.shadows.lg};
   object-fit: cover;
+  transition: all ${({ theme }) => theme.transitions.normal};
+  
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: ${({ theme }) => theme.shadows.xl};
+  }
 `;
 
 export const About = () => {
   return (
     <Container>
       <Section>
-        <Title level={1}>Jacob Bloomfield</Title>
+        <StyledTitle level={1}>Jacob Bloomfield</StyledTitle>
         <AboutContent>
           <TextContent>
             <Paragraph>
@@ -71,7 +124,7 @@ export const About = () => {
         </AboutContent>
       </Section>
       <Section>
-        <Title level={2}>Services</Title>
+        <StyledTitle level={2}>Services</StyledTitle>
         <Paragraph>
           I have assisted with research, copy-editing, and consultation for several academic and 
           heritage projects. I am also available for press comment. Please get in touch if you're 

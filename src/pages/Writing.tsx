@@ -4,8 +4,30 @@ import { Typography, Tabs, List } from 'antd';
 const { Title, Paragraph } = Typography;
 
 const Container = styled.div`
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out;
+`;
+
+const WritingCard = styled.div`
+  background: white;
+  padding: ${({ theme }) => theme.spacing.xl};
+  border-radius: 20px;
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+  transition: all ${({ theme }) => theme.transitions.normal};
+  
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows.xl};
+  }
+`;
+
+const StyledTitle = styled(Title)`
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: ${({ theme }) => theme.spacing.lg} !important;
+  font-weight: 800 !important;
 `;
 
 const Section = styled.div`
@@ -14,7 +36,44 @@ const Section = styled.div`
 
 const StyledList = styled(List)`
   .ant-list-item {
-    padding: ${({ theme }) => theme.spacing.sm} 0;
+    padding: ${({ theme }) => theme.spacing.md} 0;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+    transition: all ${({ theme }) => theme.transitions.normal};
+    
+    &:hover {
+      background: ${({ theme }) => theme.colors.backgroundAlt};
+      padding-left: ${({ theme }) => theme.spacing.sm};
+      border-left: 3px solid ${({ theme }) => theme.colors.primary};
+    }
+    
+    a {
+      color: ${({ theme }) => theme.colors.primary};
+      font-weight: 600;
+      transition: all ${({ theme }) => theme.transitions.normal};
+      
+      &:hover {
+        color: ${({ theme }) => theme.colors.secondary};
+        text-decoration: underline;
+      }
+    }
+  }
+`;
+
+const StyledTabs = styled(Tabs)`
+  .ant-tabs-tab {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    
+    &.ant-tabs-tab-active .ant-tabs-tab-btn {
+      color: ${({ theme }) => theme.colors.primary};
+      font-weight: 700;
+    }
+  }
+  
+  .ant-tabs-ink-bar {
+    background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+    height: 3px;
   }
 `;
 
@@ -232,8 +291,10 @@ export const Writing = () => {
 
   return (
     <Container>
-      <Title level={1}>Writing</Title>
-      <Tabs items={items} defaultActiveKey="academic" />
+      <WritingCard>
+        <StyledTitle level={1}>Writing</StyledTitle>
+        <StyledTabs items={items} defaultActiveKey="academic" />
+      </WritingCard>
     </Container>
   );
 };

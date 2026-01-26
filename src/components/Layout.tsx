@@ -19,12 +19,14 @@ const StyledLayout = styled(AntLayout)`
 `;
 
 const StyledHeader = styled(Header)`
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 50%, ${({ theme }) => theme.colors.tertiary} 100%);
   padding: 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+  backdrop-filter: blur(10px);
+  animation: slideInRight 0.6s ease-out;
 `;
 
 const HeaderContainer = styled.div`
@@ -42,16 +44,30 @@ const StyledMenu = styled(Menu)`
   border-bottom: none;
   flex: 1;
   
+  /* Hide the active indicator underline */
+  .ant-menu-item::after {
+    display: none !important;
+  }
+  
   .ant-menu-item {
     color: white;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0 1.5rem !important;
+    border-radius: 8px;
+    margin: 0 0.25rem !important;
+    transition: all ${({ theme }) => theme.transitions.normal};
     
     &:hover {
-      color: ${({ theme }) => theme.colors.accent} !important;
+      color: white !important;
+      background: rgba(255, 255, 255, 0.2) !important;
+      transform: translateY(-2px);
     }
     
     &.ant-menu-item-selected {
-      color: ${({ theme }) => theme.colors.accent} !important;
+      color: white !important;
+      background: rgba(255, 255, 255, 0.25) !important;
+      box-shadow: ${({ theme }) => theme.shadows.md};
     }
   }
 `;
@@ -71,24 +87,26 @@ const SocialLinks = styled.div`
 const SocialLink = styled.a`
   color: white;
   font-size: 1.2rem;
-  transition: all 0.3s ease;
+  transition: all ${({ theme }) => theme.transitions.normal};
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
   
   &:hover {
-    color: ${({ theme }) => theme.colors.accent};
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+    color: white;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: ${({ theme }) => theme.shadows.glow};
   }
   
   @media (max-width: 768px) {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     font-size: 1rem;
   }
 `;
@@ -98,13 +116,18 @@ const StyledContent = styled(Content)`
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  animation: fadeInUp 0.6s ease-out;
+  min-height: calc(100vh - 200px);
 `;
 
 const StyledFooter = styled(Footer)`
   text-align: center;
-  background: ${({ theme }) => theme.colors.backgroundAlt};
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.backgroundAlt} 0%, ${({ theme }) => theme.colors.background} 100%);
   color: ${({ theme }) => theme.colors.textLight};
   margin-top: auto;
+  padding: ${({ theme }) => theme.spacing.md};
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
+  font-weight: 500;
 `;
 
 interface LayoutProps {
