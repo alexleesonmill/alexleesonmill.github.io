@@ -46,6 +46,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Anchor offset for fixed nav */
+.section {
+  scroll-margin-top: 64px;
+}
+
 /* Animations */
 @keyframes fadeInUp {
   from {

@@ -11,14 +11,7 @@ export const Container = styled.div`
 `;
 
 export const StyledTitle = styled(Title)`
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.primary} 0%,
-    ${({ theme }) => theme.colors.secondary} 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: ${({ theme }) => theme.colors.primary};
   margin-bottom: ${({ theme }) => theme.spacing.md} !important;
   font-weight: 800 !important;
 `;

@@ -1,167 +1,256 @@
-import type { ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { type ReactNode, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Layout as AntLayout, Menu } from 'antd';
-import { FaTwitter, FaInstagram, FaEnvelope, FaLinkedin, FaFacebook, FaYoutube } from 'react-icons/fa';
+import { FaTwitter, FaEnvelope, FaBars, FaTimes } from 'react-icons/fa';
 import { socialLinks } from '../config/socialLinks';
 
-const { Header, Content, Footer } = AntLayout;
-
-const StyledLayout = styled(AntLayout)`
-  min-height: 100vh;
-`;
-
-const StyledHeader = styled(Header)`
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.primary} 0%,
-    ${({ theme }) => theme.colors.secondary} 50%,
-    ${({ theme }) => theme.colors.tertiary} 100%
-  );
-  padding: 0;
-  position: sticky;
+/* ─── Nav wrapper ─── */
+const Nav = styled.nav<{ $scrolled: boolean }>`
+  position: fixed;
   top: 0;
-  z-index: 100;
-  box-shadow: ${({ theme }) => theme.shadows.lg};
-  backdrop-filter: blur(10px);
-  animation: slideInRight 0.6s ease-out;
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: 1000;
+  background: ${({ $scrolled }) => ($scrolled ? 'rgba(44, 92, 46, 0.97)' : 'transparent')};
+  backdrop-filter: ${({ $scrolled }) => ($scrolled ? 'blur(8px)' : 'none')};
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  box-shadow: ${({ $scrolled }) => ($scrolled ? '0 1px 8px rgba(0,0,0,0.08)' : 'none')};
+  border-bottom: 1px solid ${({ $scrolled }) => ($scrolled ? 'rgba(0,0,0,0.15)' : 'transparent')};
 `;
 
-const HeaderContainer = styled.div`
-  max-width: 1200px;
+const NavInner = styled.div`
+  max-width: 960px;
   margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.md};
+  padding: 0 1.5rem;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
 `;
 
-const StyledMenu = styled(Menu)`
-  background: transparent;
-  border-bottom: none;
-  flex: 1;
+const SiteName = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  padding: 0;
 
-  /* Hide the active indicator underline */
-  .ant-menu-item::after {
-    display: none !important;
-  }
-
-  .ant-menu-item {
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 0 1.5rem !important;
-    border-radius: 8px;
-    margin: 0 0.25rem !important;
-    transition: all ${({ theme }) => theme.transitions.normal};
-
-    &:hover {
-      color: white !important;
-      background: rgba(255, 255, 255, 0.2) !important;
-      transform: translateY(-2px);
-    }
-
-    &.ant-menu-item-selected {
-      color: white !important;
-      background: rgba(255, 255, 255, 0.25) !important;
-      box-shadow: ${({ theme }) => theme.shadows.md};
-    }
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
   }
 `;
 
-const SocialLinks = styled.div`
+const NavLinks = styled.div`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-  margin-left: ${({ theme }) => theme.spacing.md};
+  gap: 2rem;
 
   @media (max-width: 768px) {
-    gap: ${({ theme }) => theme.spacing.xs};
-    margin-left: ${({ theme }) => theme.spacing.xs};
+    display: none;
+  }
+`;
+
+const NavLink = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #ffffff;
+  }
+`;
+
+const NavSocials = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
 const SocialLink = styled.a`
-  color: white;
-  font-size: 1.2rem;
-  transition: all ${({ theme }) => theme.transitions.normal};
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
+  transition: color 0.2s ease;
 
   &:hover {
-    color: white;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: ${({ theme }) => theme.shadows.glow};
+    color: #ffffff;
   }
+`;
+
+const HamburgerButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: #ffffff;
+  padding: 0.25rem;
+  line-height: 1;
 
   @media (max-width: 768px) {
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
+    display: flex;
+    align-items: center;
   }
 `;
 
-const StyledContent = styled(Content)`
-  padding: ${({ theme }) => theme.spacing.md};
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  animation: fadeInUp 0.6s ease-out;
-  min-height: calc(100vh - 200px);
+/* ─── Mobile overlay ─── */
+const MobileOverlay = styled.div<{ $open: boolean }>`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    background: rgba(44, 92, 46, 0.99);
+    opacity: ${({ $open }) => ($open ? 1 : 0)};
+    pointer-events: ${({ $open }) => ($open ? 'all' : 'none')};
+    transition: opacity 0.25s ease;
+  }
 `;
 
-const StyledFooter = styled(Footer)`
-  text-align: center;
-  background: linear-gradient(
-    135deg,
-    ${({ theme }) => theme.colors.backgroundAlt} 0%,
-    ${({ theme }) => theme.colors.background} 100%
-  );
-  color: ${({ theme }) => theme.colors.textLight};
-  margin-top: auto;
-  padding: ${({ theme }) => theme.spacing.md};
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-  font-weight: 500;
+const MobileCloseButton = styled.button`
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: #ffffff;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 `;
+
+const MobileNavLinks = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+`;
+
+const MobileNavLink = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 0;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
+`;
+
+const MobileSocials = styled.div`
+  position: absolute;
+  bottom: 2.5rem;
+  display: flex;
+  gap: 1.5rem;
+`;
+
+const MobileSocialLink = styled.a`
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #ffffff;
+  }
+`;
+
+/* ─── Page body ─── */
+const PageBody = styled.div`
+  padding-top: 0;
+`;
+
+/* ─── Footer ─── */
+const FooterEl = styled.footer`
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.backgroundAlt};
+  color: ${({ theme }) => theme.colors.textLight};
+  font-size: 0.9rem;
+`;
+
+/* ─── Nav section ids ─── */
+const sections = [
+  { id: 'about', label: 'About' },
+  { id: 'book', label: 'Book' },
+  { id: 'writing', label: 'Writing' },
+  { id: 'contact', label: 'Contact' }
+];
+
+const socialIcons = [
+  { key: 'twitter', icon: FaTwitter, url: socialLinks.twitter },
+  { key: 'email', icon: FaEnvelope, url: socialLinks.email }
+].filter(item => item.url);
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  const location = useLocation();
+  const [navScrolled, setNavScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const menuItems = [
-    { key: '/', label: <Link to="/">About</Link> },
-    { key: '/book', label: <Link to="/book">Book</Link> },
-    { key: '/writing', label: <Link to="/writing">Writing</Link> },
-    { key: '/contact', label: <Link to="/contact">Contact</Link> }
-  ];
+  useEffect(() => {
+    const onScroll = () => setNavScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  // Social media icons mapping
-  const socialIcons = [
-    { key: 'twitter', icon: FaTwitter, url: socialLinks.twitter },
-    { key: 'instagram', icon: FaInstagram, url: socialLinks.instagram },
-    { key: 'email', icon: FaEnvelope, url: socialLinks.email },
-    { key: 'linkedin', icon: FaLinkedin, url: socialLinks.linkedin },
-    { key: 'facebook', icon: FaFacebook, url: socialLinks.facebook },
-    { key: 'youtube', icon: FaYoutube, url: socialLinks.youtube }
-  ].filter(item => item.url); // Only show icons with URLs
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
+  const handleNavClick = (id: string) => {
+    setMobileOpen(false);
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.offsetTop - 64, behavior: 'smooth' });
+  };
 
   return (
-    <StyledLayout>
-      <StyledHeader>
-        <HeaderContainer>
-          <StyledMenu mode="horizontal" selectedKeys={[location.pathname]} items={menuItems} />
-          <SocialLinks>
+    <>
+      <Nav $scrolled={navScrolled}>
+        <NavInner>
+          <SiteName onClick={() => handleNavClick('about')}>Jacob Bloomfield</SiteName>
+          <NavLinks>
+            {sections.map(({ id, label }) => (
+              <NavLink key={id} onClick={() => handleNavClick(id)}>
+                {label}
+              </NavLink>
+            ))}
+          </NavLinks>
+          <NavSocials>
             {socialIcons.map(({ key, icon: Icon, url }) => (
               <SocialLink
                 key={key}
@@ -173,11 +262,42 @@ export const Layout = ({ children }: LayoutProps) => {
                 <Icon />
               </SocialLink>
             ))}
-          </SocialLinks>
-        </HeaderContainer>
-      </StyledHeader>
-      <StyledContent>{children}</StyledContent>
-      <StyledFooter>© {new Date().getFullYear()} - All rights reserved</StyledFooter>
-    </StyledLayout>
+          </NavSocials>
+          <HamburgerButton onClick={() => setMobileOpen(true)} aria-label="Open menu">
+            <FaBars />
+          </HamburgerButton>
+        </NavInner>
+      </Nav>
+
+      <MobileOverlay $open={mobileOpen}>
+        <MobileCloseButton onClick={() => setMobileOpen(false)} aria-label="Close menu">
+          <FaTimes />
+        </MobileCloseButton>
+        <MobileNavLinks>
+          {sections.map(({ id, label }) => (
+            <MobileNavLink key={id} onClick={() => handleNavClick(id)}>
+              {label}
+            </MobileNavLink>
+          ))}
+        </MobileNavLinks>
+        <MobileSocials>
+          {socialIcons.map(({ key, icon: Icon, url }) => (
+            <MobileSocialLink
+              key={key}
+              href={url}
+              target={key === 'email' ? undefined : '_blank'}
+              rel={key === 'email' ? undefined : 'noopener noreferrer'}
+              aria-label={key}
+            >
+              <Icon />
+            </MobileSocialLink>
+          ))}
+        </MobileSocials>
+      </MobileOverlay>
+
+      <PageBody>{children}</PageBody>
+
+      <FooterEl>© {new Date().getFullYear()} Jacob Bloomfield — All rights reserved</FooterEl>
+    </>
   );
 };
