@@ -412,7 +412,7 @@ interface ContactFormValues {
 }
 
 export const HomePage = () => {
-  const [form] = Form.useForm<ContactFormValues>();
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
   const scrollTo = (id: string) => {
@@ -420,7 +420,8 @@ export const HomePage = () => {
     if (el) window.scrollTo({ top: el.offsetTop - 64, behavior: 'smooth' });
   };
 
-  const onFinish = async (values: ContactFormValues) => {
+  const onFinish = async (rawValues: unknown) => {
+    const values = rawValues as ContactFormValues;
     setLoading(true);
     try {
       const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
@@ -554,7 +555,7 @@ export const HomePage = () => {
               </ContactIntro>
             </ContactInfo>
             <div>
-              <StyledForm form={form} layout="vertical" onFinish={onFinish as (values: unknown) => void} size="large">
+              <StyledForm form={form} layout="vertical" onFinish={onFinish} size="large">
                 <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter your name' }]}>
                   <Input placeholder="Your name" />
                 </Form.Item>
