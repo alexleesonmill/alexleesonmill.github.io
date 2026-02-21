@@ -43,7 +43,7 @@ If you're using a custom domain, remove or update the `base` property in `vite.c
 
 ```typescript
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react()]
   // base: '/Jake/', // Remove this line for custom domain
 });
 ```
@@ -51,6 +51,7 @@ export default defineConfig({
 ## Contact Form
 
 The contact form is currently set up with a mock submission. For a production site, you'll want to integrate with a service like:
+
 - [Formspree](https://formspree.io/)
 - [EmailJS](https://www.emailjs.com/)
 - Or your own backend API

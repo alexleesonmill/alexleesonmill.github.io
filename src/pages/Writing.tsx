@@ -1,13 +1,8 @@
 import styled from 'styled-components';
 import { Typography, Tabs, List } from 'antd';
+import { Container, StyledTitle } from '../components/common/Styled';
 
-const { Title, Paragraph } = Typography;
-
-const Container = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
-  animation: fadeInUp 0.8s ease-out;
-`;
+const { Paragraph } = Typography;
 
 const WritingCard = styled.div`
   background: white;
@@ -15,19 +10,10 @@ const WritingCard = styled.div`
   border-radius: 20px;
   box-shadow: ${({ theme }) => theme.shadows.lg};
   transition: all ${({ theme }) => theme.transitions.normal};
-  
+
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows.xl};
   }
-`;
-
-const StyledTitle = styled(Title)`
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: ${({ theme }) => theme.spacing.md} !important;
-  font-weight: 800 !important;
 `;
 
 const Section = styled.div`
@@ -39,18 +25,18 @@ const StyledList = styled(List)`
     padding: ${({ theme }) => theme.spacing.md} 0;
     border-bottom: 1px solid ${({ theme }) => theme.colors.border};
     transition: all ${({ theme }) => theme.transitions.normal};
-    
+
     &:hover {
       background: ${({ theme }) => theme.colors.backgroundAlt};
       padding-left: ${({ theme }) => theme.spacing.sm};
       border-left: 3px solid ${({ theme }) => theme.colors.primary};
     }
-    
+
     a {
       color: ${({ theme }) => theme.colors.primary};
       font-weight: 600;
       transition: all ${({ theme }) => theme.transitions.normal};
-      
+
       &:hover {
         color: ${({ theme }) => theme.colors.secondary};
         text-decoration: underline;
@@ -64,15 +50,19 @@ const StyledTabs = styled(Tabs)`
     font-weight: 600;
     font-size: 1rem;
     padding: 1rem 1.5rem;
-    
+
     &.ant-tabs-tab-active .ant-tabs-tab-btn {
       color: ${({ theme }) => theme.colors.primary};
       font-weight: 700;
     }
   }
-  
+
   .ant-tabs-ink-bar {
-    background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+    background: linear-gradient(
+      135deg,
+      ${({ theme }) => theme.colors.primary} 0%,
+      ${({ theme }) => theme.colors.secondary} 100%
+    );
     height: 3px;
   }
 `;
@@ -104,80 +94,81 @@ interface BookReview {
 export const Writing = () => {
   const academicArticles: AcademicArticle[] = [
     {
-      title: '"Little Richard: Down, Not Out": The Quasar of Rock\'s LGBTQ Iconicity and the Historical Reception to His Sexuality and Gender Presentation, 1955–Present',
+      title:
+        '"Little Richard: Down, Not Out": The Quasar of Rock\'s LGBTQ Iconicity and the Historical Reception to His Sexuality and Gender Presentation, 1955–Present',
       journal: 'Journal of the History of Sexuality',
-      url: 'https://doi.org/10.1353/sex.00051',
+      url: 'https://doi.org/10.1353/sex.00051'
     },
     {
       title: 'Splinters: Cross-Dressing Ex-Servicemen on the Interwar Stage',
       journal: 'Twentieth Century British History',
-      url: 'https://doi.org/10.1093/tcbh/hwy037',
-    },
+      url: 'https://doi.org/10.1093/tcbh/hwy037'
+    }
   ];
 
   const pressArticles: PressArticle[] = [
     {
       title: 'Dress Code',
       publication: 'Air Mail',
-      url: 'https://airmail.news/books/2023/9/dress-code',
+      url: 'https://airmail.news/books/2023/9/dress-code'
     },
     {
       title: '"They Helped Win the War": The Surprisingly Mainstream History of Drag',
       publication: 'The Telegraph',
-      url: 'https://www.telegraph.co.uk/books/non-fiction/drag-surprising-mainstream-history/',
-    },
+      url: 'https://www.telegraph.co.uk/books/non-fiction/drag-surprising-mainstream-history/'
+    }
   ];
 
   const mediaAppearances: MediaAppearance[] = [
     {
       name: 'MDR',
-      url: 'https://www.mdr.de/nachrichten/deutschland/politik/transfrauen-selbstbestimmung-uk-usa-einordnung-102.html',
+      url: 'https://www.mdr.de/nachrichten/deutschland/politik/transfrauen-selbstbestimmung-uk-usa-einordnung-102.html'
     },
     {
       name: 'BBC Culture',
-      url: 'https://www.bbc.com/culture/article/20241011-how-shocking-drag-queen-divine-went-mainstream',
+      url: 'https://www.bbc.com/culture/article/20241011-how-shocking-drag-queen-divine-went-mainstream'
     },
     {
       name: 'Dazed',
-      url: 'https://www.dazeddigital.com/life-culture/article/60761/1/the-da-zed-guide-to-british-drag-jacob-bloomfield',
+      url: 'https://www.dazeddigital.com/life-culture/article/60761/1/the-da-zed-guide-to-british-drag-jacob-bloomfield'
     },
     {
       name: 'The Herald',
-      url: 'https://www.heraldscotland.com/politics/24010114.secret-history-drag-trans-wars-soldiers-sex-scandals/',
+      url: 'https://www.heraldscotland.com/politics/24010114.secret-history-drag-trans-wars-soldiers-sex-scandals/'
     },
     {
       name: 'The Stage',
-      url: 'https://www.thestage.co.uk/obituaries--archive/archive/shantay-you-stay-how-drag-emerged-from-showbiz-to-be-a-cornerstone-of-gay-culture',
+      url: 'https://www.thestage.co.uk/obituaries--archive/archive/shantay-you-stay-how-drag-emerged-from-showbiz-to-be-a-cornerstone-of-gay-culture'
     },
     {
       name: 'Betwixt the Sheets',
-      url: 'https://podcasts.apple.com/us/podcast/the-history-of-drag-queens/id1612090432?i=1000652030943',
+      url: 'https://podcasts.apple.com/us/podcast/the-history-of-drag-queens/id1612090432?i=1000652030943'
     },
     {
       name: 'BBC History Extra',
-      url: 'https://podcasts.apple.com/us/podcast/history-extra-podcast/id256580326?i=1000644755540',
+      url: 'https://podcasts.apple.com/us/podcast/history-extra-podcast/id256580326?i=1000644755540'
     },
     {
       name: 'QX',
-      url: 'https://www.qxmagazine.com/2023/09/qx-interviews-jacob-bloomfield-author-of-drag-a-british-history/',
+      url: 'https://www.qxmagazine.com/2023/09/qx-interviews-jacob-bloomfield-author-of-drag-a-british-history/'
     },
     {
       name: 'Times Radio',
-      url: 'https://x.com/TimesRadio/status/1706693421954470333?s=20',
-    },
+      url: 'https://x.com/TimesRadio/status/1706693421954470333?s=20'
+    }
   ];
 
   const bookReviews: BookReview[] = [
     {
       title: 'The Pet Shop Boys and the Political',
       editor: 'edited by Bodie A. Ashton',
-      url: 'https://www.hsozkult.de/review/id/reb-144446?language=en',
+      url: 'https://www.hsozkult.de/review/id/reb-144446?language=en'
     },
     {
-      title: 'The Bebop Scene in London\'s Soho',
+      title: "The Bebop Scene in London's Soho",
       author: '1945-1950 by Ray Kinsella',
-      url: 'https://www.hsozkult.de/publicationreview/id/reb-132762',
-    },
+      url: 'https://www.hsozkult.de/publicationreview/id/reb-132762'
+    }
   ];
 
   const items = [
@@ -188,7 +179,7 @@ export const Writing = () => {
         <Section>
           <StyledList
             dataSource={academicArticles}
-            renderItem={(item) => {
+            renderItem={item => {
               const article = item as AcademicArticle;
               return (
                 <List.Item>
@@ -207,7 +198,7 @@ export const Writing = () => {
             }}
           />
         </Section>
-      ),
+      )
     },
     {
       key: 'press',
@@ -216,7 +207,7 @@ export const Writing = () => {
         <Section>
           <StyledList
             dataSource={pressArticles}
-            renderItem={(item) => {
+            renderItem={item => {
               const article = item as PressArticle;
               return (
                 <List.Item>
@@ -235,7 +226,7 @@ export const Writing = () => {
             }}
           />
         </Section>
-      ),
+      )
     },
     {
       key: 'media',
@@ -244,7 +235,7 @@ export const Writing = () => {
         <Section>
           <StyledList
             dataSource={mediaAppearances}
-            renderItem={(item) => {
+            renderItem={item => {
               const appearance = item as MediaAppearance;
               return (
                 <List.Item>
@@ -258,7 +249,7 @@ export const Writing = () => {
             }}
           />
         </Section>
-      ),
+      )
     },
     {
       key: 'reviews',
@@ -267,7 +258,7 @@ export const Writing = () => {
         <Section>
           <StyledList
             dataSource={bookReviews}
-            renderItem={(item) => {
+            renderItem={item => {
               const review = item as BookReview;
               return (
                 <List.Item>
@@ -285,8 +276,8 @@ export const Writing = () => {
             }}
           />
         </Section>
-      ),
-    },
+      )
+    }
   ];
 
   return (

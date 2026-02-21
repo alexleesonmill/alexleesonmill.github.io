@@ -1,12 +1,8 @@
 import styled from 'styled-components';
 import { Typography, List } from 'antd';
+import { Container } from '../components/common/Styled';
 
 const { Title } = Typography;
-
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-`;
 
 const UpdateItem = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.md};
@@ -26,13 +22,13 @@ export const Updates = () => {
     {
       date: '2025-01-20',
       content: 'I was mentioned in such-and-such an article',
-      link: 'https://example.com/article',
+      link: 'https://example.com/article'
     },
     {
       date: '2025-01-15',
       content: 'New book review published',
-      link: 'https://example.com/review',
-    },
+      link: 'https://example.com/review'
+    }
   ];
 
   return (
@@ -40,7 +36,7 @@ export const Updates = () => {
       <Title level={1}>Updates</Title>
       <List
         dataSource={updates}
-        renderItem={(item) => (
+        renderItem={item => (
           <List.Item>
             <UpdateItem>
               <UpdateDate>{item.date}</UpdateDate>

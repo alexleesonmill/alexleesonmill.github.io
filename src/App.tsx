@@ -15,8 +15,8 @@ function App() {
       <ConfigProvider
         theme={{
           token: {
-            colorPrimary: theme.colors.primary,
-          },
+            colorPrimary: theme.colors.primary
+          }
         }}
       >
         <BrowserRouter basename="/">

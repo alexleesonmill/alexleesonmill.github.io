@@ -1,14 +1,9 @@
 import styled from 'styled-components';
 import { Typography } from 'antd';
 import dragCover from '../assets/drag.jpg';
+import { Container, StyledTitle } from '../components/common/Styled';
 
-const { Title, Paragraph } = Typography;
-
-const Container = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-  animation: fadeInUp 0.8s ease-out;
-`;
+const { Paragraph } = Typography;
 
 const BookSection = styled.div`
   background: white;
@@ -17,20 +12,11 @@ const BookSection = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.lg};
   text-align: center;
   transition: all ${({ theme }) => theme.transitions.normal};
-  
+
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows.xl};
     transform: translateY(-6px);
   }
-`;
-
-const StyledTitle = styled(Title)`
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: ${({ theme }) => theme.spacing.md} !important;
-  font-weight: 800 !important;
 `;
 
 const BookCover = styled.img`
@@ -50,7 +36,7 @@ const CoverLink = styled.a`
   display: inline-block;
   text-decoration: none;
   position: relative;
-  
+
   &::after {
     content: 'Click to purchase';
     position: absolute;
@@ -67,13 +53,13 @@ const CoverLink = styled.a`
     transition: all ${({ theme }) => theme.transitions.normal};
     white-space: nowrap;
   }
-  
+
   &:hover {
     ${BookCover} {
       transform: scale(1.05) rotate(2deg);
       box-shadow: ${({ theme }) => theme.shadows.glow};
     }
-    
+
     &::after {
       opacity: 1;
       bottom: -40px;
@@ -85,12 +71,12 @@ const BookParagraph = styled(Paragraph)`
   font-size: 1.15rem;
   line-height: 1.8;
   margin-top: ${({ theme }) => theme.spacing.md};
-  
+
   a {
     color: ${({ theme }) => theme.colors.primary};
     font-weight: 600;
     transition: all ${({ theme }) => theme.transitions.normal};
-    
+
     &:hover {
       color: ${({ theme }) => theme.colors.secondary};
       text-decoration: underline;
@@ -103,11 +89,7 @@ export const Book = () => {
     <Container>
       <BookSection>
         <StyledTitle level={1}>Drag: A British History</StyledTitle>
-        <CoverLink 
-          href="https://www.ucpress.edu/books/drag/hardcover" 
-          target="_blank" 
-          rel="noopener noreferrer"
-        >
+        <CoverLink href="https://www.ucpress.edu/books/drag/hardcover" target="_blank" rel="noopener noreferrer">
           <BookCover src={dragCover} alt="Drag: A British History book cover" />
         </CoverLink>
         <BookParagraph>

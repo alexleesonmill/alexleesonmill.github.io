@@ -1,15 +1,10 @@
-import styled from 'styled-components';
 import { Typography, Form, Input, Button, message } from 'antd';
 import { useState } from 'react';
+import { Container, StyledTitle } from '../components/common/Styled';
+import styled from 'styled-components';
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 const { TextArea } = Input;
-
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  animation: fadeInUp 0.8s ease-out;
-`;
 
 const ContactCard = styled.div`
   background: white;
@@ -17,19 +12,10 @@ const ContactCard = styled.div`
   border-radius: 20px;
   box-shadow: ${({ theme }) => theme.shadows.lg};
   transition: all ${({ theme }) => theme.transitions.normal};
-  
+
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows.xl};
   }
-`;
-
-const StyledTitle = styled(Title)`
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: ${({ theme }) => theme.spacing.sm} !important;
-  font-weight: 800 !important;
 `;
 
 const IntroText = styled(Paragraph)`
@@ -41,17 +27,17 @@ const IntroText = styled(Paragraph)`
 
 const StyledForm = styled(Form)`
   margin-top: ${({ theme }) => theme.spacing.sm};
-  
+
   .ant-input,
   .ant-input-affix-wrapper {
     border-radius: 8px;
     border: 2px solid ${({ theme }) => theme.colors.border};
     transition: all ${({ theme }) => theme.transitions.normal};
-    
+
     &:hover {
       border-color: ${({ theme }) => theme.colors.primary};
     }
-    
+
     &:focus,
     &.ant-input-affix-wrapper-focused {
       border-color: ${({ theme }) => theme.colors.primary};
@@ -72,7 +58,7 @@ export const Contact = () => {
     setLoading(true);
     try {
       const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
-      
+
       if (!accessKey) {
         message.error('Contact form is not configured. Please email jrb45@kent.ac.uk directly.');
         setLoading(false);
@@ -85,7 +71,7 @@ export const Contact = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json',
+          Accept: 'application/json'
         },
         body: JSON.stringify({
           access_key: accessKey,
@@ -93,20 +79,22 @@ export const Contact = () => {
           from_name: values.name,
           from_email: values.email,
           message: `Name: ${values.name}\nEmail: ${values.email}\n\nMessage:\n${values.message}`,
-          to_email: 'jrb45@kent.ac.uk',
-        }),
+          to_email: 'jrb45@kent.ac.uk'
+        })
       });
 
       const data = await response.json();
 
       if (data.success) {
-        message.success('Thank you for your message! I\'ll get back to you soon.');
+        message.success("Thank you for your message! I'll get back to you soon.");
         form.resetFields();
       } else {
         throw new Error(data.message || 'Failed to send message');
       }
     } catch (error) {
-      message.error('Sorry, there was an error sending your message. Please try again or email me directly at jrb45@kent.ac.uk');
+      message.error(
+        'Sorry, there was an error sending your message. Please try again or email me directly at jrb45@kent.ac.uk'
+      );
     } finally {
       setLoading(false);
     }
@@ -117,58 +105,37 @@ export const Contact = () => {
       <ContactCard>
         <StyledTitle level={1}>Contact</StyledTitle>
         <IntroText>
-          Please feel free to get in touch if you'd like to interview me for a news story, 
-          chat about historical topics in my wheelhouse, or whatever else. I have experience 
-          in assisting others in historical research, consulting museums and cultural institutions 
-          regarding historical artefacts and topics, and copy-editing academic books: I'm happy 
-          to do any of these things for a reasonable fee.
+          Please feel free to get in touch if you'd like to interview me for a news story, chat about historical topics
+          in my wheelhouse, or whatever else. I have experience in assisting others in historical research, consulting
+          museums and cultural institutions regarding historical artefacts and topics, and copy-editing academic books:
+          I'm happy to do any of these things for a reasonable fee.
         </IntroText>
-        <StyledForm
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-        size="large"
-      >
-        <Form.Item
-          name="name"
-          label="Name"
-          rules={[{ required: true, message: 'Please enter your name' }]}
-        >
-          <Input placeholder="Your name" />
-        </Form.Item>
-        <Form.Item
-          name="email"
-          label="Email"
-          rules={[
-            { required: true, message: 'Please enter your email' },
-            { type: 'email', message: 'Please enter a valid email' },
-          ]}
-        >
-          <Input placeholder="your.email@example.com" />
-        </Form.Item>
-        <Form.Item
-          name="subject"
-          label="Subject"
-          rules={[{ required: true, message: 'Please enter a subject' }]}
-        >
-          <Input placeholder="What is this regarding?" />
-        </Form.Item>
-        <Form.Item
-          name="message"
-          label="Message"
-          rules={[{ required: true, message: 'Please enter your message' }]}
-        >
-          <TextArea
-            rows={6}
-            placeholder="Your message here..."
-          />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading} block>
-            Send Message
-          </Button>
-        </Form.Item>
-      </StyledForm>
+        <StyledForm form={form} layout="vertical" onFinish={onFinish} size="large">
+          <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter your name' }]}>
+            <Input placeholder="Your name" />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              { required: true, message: 'Please enter your email' },
+              { type: 'email', message: 'Please enter a valid email' }
+            ]}
+          >
+            <Input placeholder="your.email@example.com" />
+          </Form.Item>
+          <Form.Item name="subject" label="Subject" rules={[{ required: true, message: 'Please enter a subject' }]}>
+            <Input placeholder="What is this regarding?" />
+          </Form.Item>
+          <Form.Item name="message" label="Message" rules={[{ required: true, message: 'Please enter your message' }]}>
+            <TextArea rows={6} placeholder="Your message here..." />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={loading} block>
+              Send Message
+            </Button>
+          </Form.Item>
+        </StyledForm>
       </ContactCard>
     </Container>
   );

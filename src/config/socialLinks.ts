@@ -7,6 +7,6 @@ export const socialLinks = {
   email: 'mailto:jrb45@kent.ac.uk', // Email link
   linkedin: '', // e.g., 'https://linkedin.com/in/yourusername'
   facebook: '', // e.g., 'https://facebook.com/yourusername'
-  youtube: '', // e.g., 'https://youtube.com/@yourusername'
+  youtube: '' // e.g., 'https://youtube.com/@yourusername'
   // Add more as needed
 };
