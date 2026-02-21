@@ -361,7 +361,7 @@ const StyledForm = styled(Form)`
 
   .ant-form-item-label > label {
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     color: ${theme.colors.text};
   }
 `;
@@ -558,9 +558,9 @@ export const HomePage = () => {
       {/* Contact */}
       <Section $alt id="contact">
         <Container>
-          <SectionTitle>Contact</SectionTitle>
           <ContactGrid>
             <ContactInfo>
+              <SectionTitle>Contact</SectionTitle>
               <ContactIntro>
                 Please feel free to get in touch if you'd like to interview me for a news story, chat about historical
                 topics in my wheelhouse, or whatever else. I have experience in assisting others in historical research,
