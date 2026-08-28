@@ -7,20 +7,14 @@ import { theme } from '../theme';
 /* ─── Nav wrapper ─── */
 const NAV_HEIGHT = 64;
 
-const Nav = styled.nav<{ $scrolled: boolean }>`
+const Nav = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: ${NAV_HEIGHT}px;
   z-index: 1000;
-  background: ${({ $scrolled }) => ($scrolled ? '#ffffff' : theme.colors.primary)};
-  transition:
-    background 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
-  box-shadow: ${({ $scrolled }) => ($scrolled ? '0 1px 8px rgba(0,0,0,0.08)' : 'none')};
-  border-bottom: 1px solid ${({ $scrolled }) => ($scrolled ? 'rgba(0,0,0,0.08)' : 'transparent')};
+  background: ${theme.colors.primary};
 `;
 
 const NavInner = styled.div`
@@ -33,19 +27,18 @@ const NavInner = styled.div`
   justify-content: space-between;
 `;
 
-const SiteName = styled.button<{ $scrolled: boolean }>`
+const SiteName = styled.button`
   background: none;
   border: none;
   cursor: pointer;
   font-size: 1.1rem;
   font-weight: 700;
-  color: ${({ $scrolled }) => ($scrolled ? theme.colors.text : '#ffffff')};
+  color: #ffffff;
   letter-spacing: -0.02em;
   padding: 0;
-  transition: color 0.3s ease;
 
   &:hover {
-    color: ${({ $scrolled }) => ($scrolled ? theme.colors.primary : 'rgba(255, 255, 255, 0.8)')};
+    color: rgba(255, 255, 255, 0.8);
   }
 `;
 
@@ -59,18 +52,18 @@ const NavLinks = styled.div`
   }
 `;
 
-const NavLink = styled.button<{ $scrolled: boolean }>`
+const NavLink = styled.button`
   background: none;
   border: none;
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 500;
-  color: ${({ $scrolled }) => ($scrolled ? theme.colors.text : 'rgba(255, 255, 255, 0.8)')};
+  color: rgba(255, 255, 255, 0.8);
   padding: 0;
   transition: color 0.2s ease;
 
   &:hover {
-    color: ${({ $scrolled }) => ($scrolled ? theme.colors.primary : '#ffffff')};
+    color: #ffffff;
   }
 `;
 
@@ -84,28 +77,27 @@ const NavSocials = styled.div`
   }
 `;
 
-const SocialLink = styled.a<{ $scrolled: boolean }>`
-  color: ${({ $scrolled }) => ($scrolled ? theme.colors.text : 'rgba(255, 255, 255, 0.7)')};
+const SocialLink = styled.a`
+  color: rgba(255, 255, 255, 0.7);
   font-size: 1.1rem;
   display: flex;
   align-items: center;
   transition: color 0.2s ease;
 
   &:hover {
-    color: ${({ $scrolled }) => ($scrolled ? theme.colors.primary : '#ffffff')};
+    color: #ffffff;
   }
 `;
 
-const HamburgerButton = styled.button<{ $scrolled: boolean }>`
+const HamburgerButton = styled.button`
   display: none;
   background: none;
   border: none;
   cursor: pointer;
   font-size: 1.4rem;
-  color: ${({ $scrolled }) => ($scrolled ? theme.colors.text : '#ffffff')};
+  color: #ffffff;
   padding: 0.25rem;
   line-height: 1;
-  transition: color 0.3s ease;
 
   @media (max-width: 768px) {
     display: flex;
@@ -219,27 +211,7 @@ interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  const [navScrolled, setNavScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  useEffect(() => {
-    const updateNav = () => {
-      const hero = document.getElementById('about');
-      if (!hero) {
-        setNavScrolled(window.scrollY > NAV_HEIGHT);
-        return;
-      }
-      setNavScrolled(hero.getBoundingClientRect().bottom <= NAV_HEIGHT);
-    };
-
-    updateNav();
-    window.addEventListener('scroll', updateNav, { passive: true });
-    window.addEventListener('resize', updateNav);
-    return () => {
-      window.removeEventListener('scroll', updateNav);
-      window.removeEventListener('resize', updateNav);
-    };
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -251,19 +223,17 @@ export const Layout = ({ children }: LayoutProps) => {
   const handleNavClick = (id: string) => {
     setMobileOpen(false);
     const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: el.offsetTop - 64, behavior: 'smooth' });
+    if (el) window.scrollTo({ top: el.offsetTop - NAV_HEIGHT, behavior: 'smooth' });
   };
 
   return (
     <>
-      <Nav $scrolled={navScrolled}>
+      <Nav>
         <NavInner>
-          <SiteName $scrolled={navScrolled} onClick={() => handleNavClick('about')}>
-            Jacob Bloomfield
-          </SiteName>
+          <SiteName onClick={() => handleNavClick('about')}>Jacob Bloomfield</SiteName>
           <NavLinks>
             {sections.map(({ id, label }) => (
-              <NavLink key={id} $scrolled={navScrolled} onClick={() => handleNavClick(id)}>
+              <NavLink key={id} onClick={() => handleNavClick(id)}>
                 {label}
               </NavLink>
             ))}
@@ -272,7 +242,6 @@ export const Layout = ({ children }: LayoutProps) => {
             {socialIcons.map(({ key, icon: Icon, url }) => (
               <SocialLink
                 key={key}
-                $scrolled={navScrolled}
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -282,11 +251,7 @@ export const Layout = ({ children }: LayoutProps) => {
               </SocialLink>
             ))}
           </NavSocials>
-          <HamburgerButton
-            $scrolled={navScrolled}
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-          >
+          <HamburgerButton onClick={() => setMobileOpen(true)} aria-label="Open menu">
             <FaBars />
           </HamburgerButton>
         </NavInner>
