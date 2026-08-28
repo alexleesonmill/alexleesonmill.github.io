@@ -229,7 +229,7 @@ const WritingGrid = styled.div`
 
 const WritingCategory = styled.div``;
 
-const CategoryHeader = styled.h3`
+const CategoryHeader = styled.h3<{ $hasIntro?: boolean }>`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -238,7 +238,7 @@ const CategoryHeader = styled.h3`
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: ${theme.colors.primary};
-  margin-bottom: 1.25rem;
+  margin-bottom: ${({ $hasIntro }) => ($hasIntro ? '0.4rem' : '1.25rem')};
 
   &::after {
     content: '';
@@ -246,6 +246,12 @@ const CategoryHeader = styled.h3`
     height: 1px;
     background: ${theme.colors.border};
   }
+`;
+
+const CategoryIntro = styled.p`
+  font-size: 0.9rem;
+  color: ${theme.colors.textLight};
+  margin: 0 0 1.25rem;
 `;
 
 const ArticleCard = styled.div`
@@ -334,6 +340,15 @@ const ContactIntro = styled.p`
   line-height: 1.8;
   color: ${theme.colors.text};
   margin-bottom: 1.5rem;
+
+  a {
+    color: ${theme.colors.primary};
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 const StyledForm = styled(Form)`
@@ -451,10 +466,8 @@ export const HomePage = () => {
                 cultural history and the history of sexuality – on both sides of the Atlantic – more generally.
               </p>
               <p>
-                <em>
-                  'Dr Jacob Bloomfield is the uncontested expert when it comes to the history of drag in this country.'
-                  – The Herald.
-                </em>
+                'Dr Jacob Bloomfield is the uncontested expert when it comes to the history of drag in this country.'
+                – <strong>The Herald</strong>.
               </p>
             </BioText>
             <ServicesBlock>
@@ -482,7 +495,9 @@ export const HomePage = () => {
             >
               <BookCover src={dragCover} alt="Drag: A British History book cover" />
             </BookCoverLink>
-            <BookTitle>Drag: A British History</BookTitle>
+            <BookTitle>
+              <em>Drag: A British History</em>
+            </BookTitle>
             <BookPublisher>University of California Press</BookPublisher>
             <PurchaseButton
               href="https://www.ucpress.edu/books/drag/hardcover"
@@ -515,7 +530,8 @@ export const HomePage = () => {
             </WritingCategory>
 
             <WritingCategory>
-              <CategoryHeader>Press</CategoryHeader>
+              <CategoryHeader $hasIntro>Press</CategoryHeader>
+              <CategoryIntro>Articles written for newspapers and magazines</CategoryIntro>
               {pressArticles.map(a => (
                 <ArticleCard key={a.url}>
                   <CardTitle href={a.url} target="_blank" rel="noopener noreferrer">
@@ -529,7 +545,8 @@ export const HomePage = () => {
             </WritingCategory>
 
             <WritingCategory>
-              <CategoryHeader>Media</CategoryHeader>
+              <CategoryHeader $hasIntro>Media</CategoryHeader>
+              <CategoryIntro>Appearances in broadcast and other media</CategoryIntro>
               <MediaGrid>
                 {mediaAppearances.map(a => (
                   <MediaPill key={a.url} href={a.url} target="_blank" rel="noopener noreferrer">
@@ -562,10 +579,10 @@ export const HomePage = () => {
             <ContactInfo>
               <SectionTitle>Contact</SectionTitle>
               <ContactIntro>
-                Please feel free to get in touch if you'd like to interview me for a news story, chat about historical
-                topics in my wheelhouse, or whatever else. I have experience in assisting others in historical research,
-                consulting museums and cultural institutions regarding historical artefacts and topics, and copy-editing
-                academic books: I'm happy to do any of these things for a reasonable fee.
+                If you'd like to interview me for a news story and/or chat about historical topics, contact me at{' '}
+                <a href="mailto:jrb45@kent.ac.uk">jrb45@kent.ac.uk</a>. I have experience in assisting others in
+                historical research, consulting museums and cultural institutions regarding historical artefacts and
+                topics, and copy-editing academic books: I'm happy to do any of these things for a reasonable fee.
               </ContactIntro>
             </ContactInfo>
             <div>

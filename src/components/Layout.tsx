@@ -1,24 +1,26 @@
 import { type ReactNode, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { FaTwitter, FaEnvelope, FaBars, FaTimes } from 'react-icons/fa';
+import { FaLinkedin, FaBars, FaTimes } from 'react-icons/fa';
 import { socialLinks } from '../config/socialLinks';
+import { theme } from '../theme';
 
 /* ─── Nav wrapper ─── */
+const NAV_HEIGHT = 64;
+
 const Nav = styled.nav<{ $scrolled: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 64px;
+  height: ${NAV_HEIGHT}px;
   z-index: 1000;
-  background: ${({ $scrolled }) => ($scrolled ? 'rgba(44, 92, 46, 0.97)' : 'transparent')};
-  backdrop-filter: ${({ $scrolled }) => ($scrolled ? 'blur(8px)' : 'none')};
+  background: ${({ $scrolled }) => ($scrolled ? '#ffffff' : theme.colors.primary)};
   transition:
     background 0.3s ease,
     box-shadow 0.3s ease,
     border-color 0.3s ease;
   box-shadow: ${({ $scrolled }) => ($scrolled ? '0 1px 8px rgba(0,0,0,0.08)' : 'none')};
-  border-bottom: 1px solid ${({ $scrolled }) => ($scrolled ? 'rgba(0,0,0,0.15)' : 'transparent')};
+  border-bottom: 1px solid ${({ $scrolled }) => ($scrolled ? 'rgba(0,0,0,0.08)' : 'transparent')};
 `;
 
 const NavInner = styled.div`
@@ -31,18 +33,19 @@ const NavInner = styled.div`
   justify-content: space-between;
 `;
 
-const SiteName = styled.button`
+const SiteName = styled.button<{ $scrolled: boolean }>`
   background: none;
   border: none;
   cursor: pointer;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #ffffff;
+  color: ${({ $scrolled }) => ($scrolled ? theme.colors.text : '#ffffff')};
   letter-spacing: -0.02em;
   padding: 0;
+  transition: color 0.3s ease;
 
   &:hover {
-    color: rgba(255, 255, 255, 0.8);
+    color: ${({ $scrolled }) => ($scrolled ? theme.colors.primary : 'rgba(255, 255, 255, 0.8)')};
   }
 `;
 
@@ -56,18 +59,18 @@ const NavLinks = styled.div`
   }
 `;
 
-const NavLink = styled.button`
+const NavLink = styled.button<{ $scrolled: boolean }>`
   background: none;
   border: none;
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
+  color: ${({ $scrolled }) => ($scrolled ? theme.colors.text : 'rgba(255, 255, 255, 0.8)')};
   padding: 0;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #ffffff;
+    color: ${({ $scrolled }) => ($scrolled ? theme.colors.primary : '#ffffff')};
   }
 `;
 
@@ -81,27 +84,28 @@ const NavSocials = styled.div`
   }
 `;
 
-const SocialLink = styled.a`
-  color: rgba(255, 255, 255, 0.7);
+const SocialLink = styled.a<{ $scrolled: boolean }>`
+  color: ${({ $scrolled }) => ($scrolled ? theme.colors.text : 'rgba(255, 255, 255, 0.7)')};
   font-size: 1.1rem;
   display: flex;
   align-items: center;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #ffffff;
+    color: ${({ $scrolled }) => ($scrolled ? theme.colors.primary : '#ffffff')};
   }
 `;
 
-const HamburgerButton = styled.button`
+const HamburgerButton = styled.button<{ $scrolled: boolean }>`
   display: none;
   background: none;
   border: none;
   cursor: pointer;
   font-size: 1.4rem;
-  color: #ffffff;
+  color: ${({ $scrolled }) => ($scrolled ? theme.colors.text : '#ffffff')};
   padding: 0.25rem;
   line-height: 1;
+  transition: color 0.3s ease;
 
   @media (max-width: 768px) {
     display: flex;
@@ -206,10 +210,9 @@ const sections = [
   { id: 'contact', label: 'Contact' }
 ];
 
-const socialIcons = [
-  { key: 'twitter', icon: FaTwitter, url: socialLinks.twitter },
-  { key: 'email', icon: FaEnvelope, url: socialLinks.email }
-].filter(item => item.url);
+const socialIcons = [{ key: 'linkedin', icon: FaLinkedin, url: socialLinks.linkedin }].filter(
+  item => item.url
+);
 
 interface LayoutProps {
   children: ReactNode;
@@ -220,9 +223,22 @@ export const Layout = ({ children }: LayoutProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setNavScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const updateNav = () => {
+      const hero = document.getElementById('about');
+      if (!hero) {
+        setNavScrolled(window.scrollY > NAV_HEIGHT);
+        return;
+      }
+      setNavScrolled(hero.getBoundingClientRect().bottom <= NAV_HEIGHT);
+    };
+
+    updateNav();
+    window.addEventListener('scroll', updateNav, { passive: true });
+    window.addEventListener('resize', updateNav);
+    return () => {
+      window.removeEventListener('scroll', updateNav);
+      window.removeEventListener('resize', updateNav);
+    };
   }, []);
 
   useEffect(() => {
@@ -242,10 +258,12 @@ export const Layout = ({ children }: LayoutProps) => {
     <>
       <Nav $scrolled={navScrolled}>
         <NavInner>
-          <SiteName onClick={() => handleNavClick('about')}>Jacob Bloomfield</SiteName>
+          <SiteName $scrolled={navScrolled} onClick={() => handleNavClick('about')}>
+            Jacob Bloomfield
+          </SiteName>
           <NavLinks>
             {sections.map(({ id, label }) => (
-              <NavLink key={id} onClick={() => handleNavClick(id)}>
+              <NavLink key={id} $scrolled={navScrolled} onClick={() => handleNavClick(id)}>
                 {label}
               </NavLink>
             ))}
@@ -254,16 +272,21 @@ export const Layout = ({ children }: LayoutProps) => {
             {socialIcons.map(({ key, icon: Icon, url }) => (
               <SocialLink
                 key={key}
+                $scrolled={navScrolled}
                 href={url}
-                target={key === 'email' ? undefined : '_blank'}
-                rel={key === 'email' ? undefined : 'noopener noreferrer'}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={key}
               >
                 <Icon />
               </SocialLink>
             ))}
           </NavSocials>
-          <HamburgerButton onClick={() => setMobileOpen(true)} aria-label="Open menu">
+          <HamburgerButton
+            $scrolled={navScrolled}
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open menu"
+          >
             <FaBars />
           </HamburgerButton>
         </NavInner>
@@ -285,8 +308,8 @@ export const Layout = ({ children }: LayoutProps) => {
             <MobileSocialLink
               key={key}
               href={url}
-              target={key === 'email' ? undefined : '_blank'}
-              rel={key === 'email' ? undefined : 'noopener noreferrer'}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label={key}
             >
               <Icon />
